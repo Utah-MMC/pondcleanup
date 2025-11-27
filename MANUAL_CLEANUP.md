@@ -126,3 +126,4 @@ grep -ri "@.*\.com" nationalpondservice.com/ --include="*.html" | grep -i email
 6. Deploy to Vercel
 7. Set up custom domain (pondauthority.com)
 
+

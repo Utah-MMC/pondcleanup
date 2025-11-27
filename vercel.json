@@ -1,16 +1,11 @@
 {
   "version": 2,
-  "public": false,
-  "builds": [
+  "buildCommand": null,
+  "outputDirectory": "nationalpondservice.com",
+  "rewrites": [
     {
-      "src": "nationalpondservice.com/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/nationalpondservice.com/$1"
+      "source": "/(.*)",
+      "destination": "/$1"
     }
   ]
 }
