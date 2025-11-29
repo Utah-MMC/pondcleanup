@@ -1,15 +1,16 @@
 {
-  "name": "pond-authority",
+  "name": "pond-cleanup",
   "version": "1.0.0",
-  "description": "Pond Authority - A nationwide contractor finder platform for pond and water-feature services",
+  "description": "Pond Cleanup - Nationwide pond cleaning and maintenance service",
   "scripts": {
     "dev": "live-server --port=3000 --open=/index.html",
     "start": "live-server --port=3000 --open=/index.html"
   },
   "keywords": [
     "pond",
-    "contractor",
-    "directory"
+    "cleaning",
+    "maintenance",
+    "pond cleanup"
   ],
   "author": "",
   "license": "ISC",
@@ -17,4 +18,3 @@
     "live-server": "^1.2.2"
   }
 }
-

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "pondauthority",
+			"path": ".."
+		},
+		{
+			"name": "pond_pics",
+			"path": "../../pond_pics"
+		}
+	],
+	"settings": {}
+}
