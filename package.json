@@ -1,14 +1,20 @@
 {
-  "name": "pondauthority",
+  "name": "pond-authority",
   "version": "1.0.0",
-  "description": "Pond Authority website - mirrored from nationalpondservice.com",
+  "description": "Pond Authority - A nationwide contractor finder platform for pond and water-feature services",
   "scripts": {
-    "mirror": "node mirror-site.js",
-    "replace-branding": "node replace-branding.js"
+    "dev": "live-server --port=3000 --open=/index.html",
+    "start": "live-server --port=3000 --open=/index.html"
   },
-  "dependencies": {
-    "playwright": "^1.57.0",
-    "website-scraper": "^5.0.0",
-    "website-scraper-puppeteer": "^1.1.0"
+  "keywords": [
+    "pond",
+    "contractor",
+    "directory"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.2"
   }
 }
+
