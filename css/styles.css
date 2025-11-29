@@ -178,9 +178,16 @@ p {
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 70px;
+  width: auto;
+  max-width: 280px;
+  object-fit: contain;
 }
 
 .main-nav {
@@ -314,6 +321,11 @@ p {
   padding: var(--spacing-md);
 }
 
+.step img {
+  display: block;
+  margin: 0 auto var(--spacing-sm) auto;
+}
+
 .step-number {
   display: inline-block;
   width: 60px;
@@ -325,6 +337,8 @@ p {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: var(--spacing-sm);
+  position: relative;
+  z-index: 1;
 }
 
 .step h3 {
@@ -404,6 +418,11 @@ p {
   padding: var(--spacing-md);
 }
 
+.why-item img {
+  display: block;
+  margin: 0 auto var(--spacing-sm) auto;
+}
+
 .why-item h3 {
   color: var(--color-primary);
   margin-bottom: var(--spacing-xs);
@@ -469,6 +488,20 @@ p {
   color: var(--color-text-light);
   font-size: var(--font-size-small);
   margin-bottom: var(--spacing-sm);
+}
+
+.card-website {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-small);
+}
+
+.card-website a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.card-website a:hover {
+  color: var(--color-primary-dark);
 }
 
 /* ============================================
