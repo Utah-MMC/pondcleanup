@@ -1,0 +1,12 @@
+# Ignore old static HTML files - we're using Next.js now
+index.html
+pages/**/*.html
+*.html
+
+# Ignore old static assets that are now in public/
+css/
+js/
+
+# Keep these for reference but don't deploy
+docs/
+
