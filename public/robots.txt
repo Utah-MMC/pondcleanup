@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemap Index
 Sitemap: https://pondcleanup.com/sitemap.xml
 
 # Disallow admin and private areas (if any)

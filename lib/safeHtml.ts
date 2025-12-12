@@ -42,4 +42,8 @@ export function sanitizeProductDescription(html: string): string {
   });
 }
 
+export function sanitizeHtmlForDisplay(html: string): string {
+  return sanitizeProductDescription(html);
+}
+
 
