@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import SmartImage from '@/components/SmartImage';
 import { listActiveProducts } from '@/lib/productStore';
+import { Prisma } from '@prisma/client';
+
+type Product = Prisma.ProductGetPayload<{}>;
 
 export const metadata = {
   title: 'Pond Supplies | Pond Cleanup Shop',
@@ -14,7 +17,7 @@ function formatPrice(cents: number) {
 }
 
 export default async function ShopPage() {
-  let products = [];
+  let products: Product[] = [];
   try {
     products = await listActiveProducts();
   } catch (error) {
