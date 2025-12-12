@@ -6,8 +6,7 @@ const nextConfig = {
   },
   // Preserve trailing slashes for SEO
   trailingSlash: false,
-  // Output static files if needed
-  output: 'standalone',
+  // Remove output: 'standalone' - Vercel handles Next.js automatically
 }
 
 module.exports = nextConfig
