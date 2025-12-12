@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://pondcleanup.com/sitemap.xml
+
+# Disallow admin and private areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+# Allow all city pages
+Allow: /cities/
+Allow: /contractor/
+
+# Allow all main pages
+Allow: /find-a-contractor
+Allow: /services
+Allow: /how-it-works
+Allow: /about
+Allow: /contact
+Allow: /for-contractors
+

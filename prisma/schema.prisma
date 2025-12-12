@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+
+  name          String
+  email         String
+  phone         String
+  location      String
+  pondType      String?
+  service       String?
+  pondSize      String?
+  description   String?
+  contactMethod String?
+
+  // Attribution
+  source        String?  // e.g. "book", "contractor", "paid-traffic"
+  referrer      String?
+  userAgent     String?
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  source           String   @default("manual") // "alidrop" etc
+  externalId       String?  // id from AliDrop (if present)
+
+  slug             String   @unique
+  name             String
+  shortDescription String?
+  description      String?
+  priceCents       Int
+  imageUrl         String?
+
+  active           Boolean  @default(true)
+
+  // Keep original row for debugging / remapping
+  raw              Json?
+
+  @@index([active])
+  @@index([source])
+}
+
+
