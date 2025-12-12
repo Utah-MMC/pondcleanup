@@ -13,16 +13,30 @@ function formatPrice(cents: number) {
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: { product: string } }): Promise<Metadata> {
-  const p = await getActiveProductBySlug(params.product);
-  if (!p) return { title: 'Product Not Found | Pond Cleanup Shop' };
-  return {
-    title: `${p.name} | Pond Cleanup Shop`,
-    description: p.shortDescription ?? undefined,
-  };
+  try {
+    const p = await getActiveProductBySlug(params.product);
+    if (!p) return { title: 'Product Not Found | Pond Cleanup Shop' };
+    return {
+      title: `${p.name} | Pond Cleanup Shop`,
+      description: p.shortDescription ?? undefined,
+    };
+  } catch (error) {
+    // Handle database errors gracefully
+    console.error('Error loading product metadata:', error);
+    return { title: 'Product | Pond Cleanup Shop' };
+  }
 }
 
 export default async function ProductPage({ params }: { params: { product: string } }) {
-  const p = await getActiveProductBySlug(params.product);
+  let p;
+  try {
+    p = await getActiveProductBySlug(params.product);
+  } catch (error) {
+    // Handle database errors gracefully (e.g., SQLite not available on Vercel)
+    console.error('Error loading product:', error);
+    notFound();
+  }
+  
   if (!p) notFound();
 
   const description = p.description ?? '';
