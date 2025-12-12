@@ -14,7 +14,14 @@ function formatPrice(cents: number) {
 }
 
 export default async function ShopPage() {
-  const products = await listActiveProducts();
+  let products = [];
+  try {
+    products = await listActiveProducts();
+  } catch (error) {
+    // Handle database errors gracefully (e.g., SQLite not available on Vercel)
+    console.error('Error loading products:', error);
+    // Continue with empty products array - page will show "No products yet" message
+  }
 
   return (
     <main>
