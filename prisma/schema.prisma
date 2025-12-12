@@ -25,6 +25,12 @@ model Lead {
   source        String?  // e.g. "book", "contractor", "paid-traffic"
   referrer      String?
   userAgent     String?
+
+  // Contractor assignments
+  contractorAssignments ContractorLead[]
+
+  @@index([createdAt])
+  @@index([source])
 }
 
 model Product {
@@ -47,8 +53,106 @@ model Product {
   // Keep original row for debugging / remapping
   raw              Json?
 
+  orders           OrderItem[]
+
   @@index([active])
   @@index([source])
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Customer info
+  customerName  String
+  customerEmail String
+  customerPhone String?
+  shippingAddress String?  // For physical products
+
+  // Order details
+  status        String      @default("pending") // pending, processing, shipped, completed, cancelled
+  subtotalCents Int
+  shippingCents Int         @default(0)
+  totalCents    Int
+
+  // Attribution
+  source        String?     // e.g. "shop", "checkout"
+  referrer      String?
+
+  items         OrderItem[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id])
+
+  quantity      Int
+  priceCents    Int      // Snapshot of price at time of order
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Contractor {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Auth
+  email         String   @unique
+  passwordHash  String   // bcrypt hash
+
+  // Profile
+  name          String
+  companyName   String?
+  location      String
+  city          String
+  state         String
+  zip           Json?     // JSON array of ZIP codes
+  phone         String?
+  website       String?
+
+  // Services
+  services      Json?     // JSON array of service names
+
+  // Status
+  active        Boolean  @default(true)
+
+  // Leads assigned to this contractor
+  assignedLeads ContractorLead[]
+
+  @@index([email])
+  @@index([active])
+}
+
+model ContractorLead {
+  id            String      @id @default(cuid())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  contractorId  String
+  contractor    Contractor  @relation(fields: [contractorId], references: [id], onDelete: Cascade)
+
+  leadId        String
+  lead          Lead        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  status        String      @default("new") // new, contacted, quoted, scheduled, completed, lost
+  notes         String?
+
+  @@unique([contractorId, leadId])
+  @@index([contractorId])
+  @@index([leadId])
+  @@index([status])
 }
 
 

@@ -3,6 +3,10 @@ import { allCitySlugs } from '@/lib/cities';
 import { contractors } from '@/lib/contractors';
 import { listActiveProducts } from '@/lib/productStore';
 
+// Ensure sitemap is generated at build time and is revalidated
+export const dynamic = 'force-static';
+export const revalidate = 86400; // Revalidate once per day
+
 const BASE_URL = 'https://pondcleanup.com';
 
 // Service slugs
@@ -144,6 +148,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/diy`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/diy/clarity-algae-basics`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${BASE_URL}/diy/spring-opening-checklist`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${BASE_URL}/diy/fall-closing-checklist`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
   ];
 
   // Service pages
@@ -181,18 +209,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
   // Product pages (fetch from database)
+  // Note: If database is unavailable (e.g., during build on Vercel with SQLite),
+  // we'll skip product pages but still generate the rest of the sitemap
   let productPages: MetadataRoute.Sitemap = [];
   try {
     const products = await listActiveProducts();
-    productPages = products.map((product) => ({
-      url: `${BASE_URL}/shop/${product.slug}`,
-      lastModified: product.updatedAt.toISOString().split('T')[0],
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    }));
+    if (products && products.length > 0) {
+      productPages = products.map((product) => ({
+        url: `${BASE_URL}/shop/${product.slug}`,
+        lastModified: product.updatedAt ? product.updatedAt.toISOString().split('T')[0] : now,
+        changeFrequency: 'weekly' as const,
+        priority: 0.6,
+      }));
+    }
   } catch (error) {
-    console.error('Error fetching products for sitemap:', error);
-    // Continue without product pages if database is unavailable
+    // Silently continue without product pages if database is unavailable
+    // This ensures the sitemap still generates successfully
+    // Log in development only
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Sitemap: Could not fetch products, continuing without product pages');
+    }
   }
 
   // Combine all pages

@@ -30,20 +30,23 @@ export default function DiyPage() {
               </div>
             </article>
 
-            <article className="service-card">
+            <Link href="/diy/clarity-algae-basics" className="service-card" style={{ textDecoration: 'none', display: 'block' }}>
               <h3>Clarity & algae basics</h3>
               <p>Understand why water turns green, how filtration works, and what to change first.</p>
-            </article>
+              <span className="service-link" style={{ display: 'inline-block', marginTop: 'var(--spacing-xs)' }}>Read guide →</span>
+            </Link>
 
-            <article className="service-card">
+            <Link href="/diy/spring-opening-checklist" className="service-card" style={{ textDecoration: 'none', display: 'block' }}>
               <h3>Spring opening checklist</h3>
               <p>Step-by-step tasks to restart pumps, clean filters, and prep for warmer water.</p>
-            </article>
+              <span className="service-link" style={{ display: 'inline-block', marginTop: 'var(--spacing-xs)' }}>Read guide →</span>
+            </Link>
 
-            <article className="service-card">
+            <Link href="/diy/fall-closing-checklist" className="service-card" style={{ textDecoration: 'none', display: 'block' }}>
               <h3>Fall closing checklist</h3>
               <p>Protect equipment, reduce debris load, and set your pond up for a smooth winter.</p>
-            </article>
+              <span className="service-link" style={{ display: 'inline-block', marginTop: 'var(--spacing-xs)' }}>Read guide →</span>
+            </Link>
           </div>
         </div>
       </section>
