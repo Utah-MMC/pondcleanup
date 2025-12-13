@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCart } from '@/components/cart/CartProvider';
+import ShippingInfo from '@/components/shipping/ShippingInfo';
 
 function formatPrice(cents: number) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100);
@@ -68,6 +69,8 @@ export default function CartView() {
           </div>
         </div>
       </div>
+
+      <ShippingInfo />
     </div>
   );
 }

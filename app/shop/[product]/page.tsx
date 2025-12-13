@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AddToCartButton from '@/components/cart/AddToCartButton';
 import SmartImage from '@/components/SmartImage';
+import ShippingInfo from '@/components/shipping/ShippingInfo';
 import { getActiveProductBySlug } from '@/lib/productStore';
 import { sanitizeProductDescription } from '@/lib/safeHtml';
 
@@ -115,6 +116,10 @@ export default async function ProductPage({ params }: { params: { product: strin
                 </Link>
               </div>
             </aside>
+          </div>
+
+          <div style={{ marginTop: 'var(--spacing-lg)' }}>
+            <ShippingInfo />
           </div>
         </div>
       </section>
