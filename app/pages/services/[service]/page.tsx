@@ -80,9 +80,20 @@ export default function ServicePage({ params }: { params: { service: string } })
               <div className="sidebar-box">
                 <h2>Related Services</h2>
                 <ul className="related-services">
+                  <li><Link href="/services">All Services</Link></li>
+                  <li><Link href="/services/pond-cleaning">Pond Cleaning</Link></li>
                   <li><Link href="/services/pond-maintenance">Seasonal Maintenance</Link></li>
                   <li><Link href="/services/pond-opening-closing">Opening & Closing</Link></li>
                   <li><Link href="/services/pond-restoration">Restoration</Link></li>
+                </ul>
+              </div>
+              <div className="sidebar-box">
+                <h2>Other Resources</h2>
+                <ul className="related-services">
+                  <li><Link href="/locations">Service Locations</Link></li>
+                  <li><Link href="/contractors">Find a Contractor</Link></li>
+                  <li><Link href="/diy">DIY Guides</Link></li>
+                  <li><Link href="/gallery">Gallery</Link></li>
                 </ul>
               </div>
             </div>

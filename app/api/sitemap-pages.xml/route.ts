@@ -19,7 +19,7 @@ function generatePagesSitemap(): string {
   const urls = [
     // Homepage
     { url: BASE_URL, priority: '1.0', changefreq: 'weekly' },
-    // Main navigation pages
+    // Main navigation pages (only include routes that actually exist)
     { url: `${BASE_URL}/about`, priority: '0.8', changefreq: 'monthly' },
     { url: `${BASE_URL}/book`, priority: '0.9', changefreq: 'weekly' },
     { url: `${BASE_URL}/contact`, priority: '0.7', changefreq: 'monthly' },
@@ -31,16 +31,16 @@ function generatePagesSitemap(): string {
     { url: `${BASE_URL}/locations`, priority: '0.9', changefreq: 'weekly' },
     { url: `${BASE_URL}/services`, priority: '0.9', changefreq: 'monthly' },
     { url: `${BASE_URL}/shop`, priority: '0.8', changefreq: 'weekly' },
-    // Legacy /pages routes
+    // Legacy /pages routes (keep for backward compatibility)
     { url: `${BASE_URL}/pages/about`, priority: '0.6', changefreq: 'monthly' },
-    { url: `${BASE_URL}/pages/book`, priority: '0.9', changefreq: 'weekly' },
+    { url: `${BASE_URL}/pages/book`, priority: '0.6', changefreq: 'weekly' },
     { url: `${BASE_URL}/pages/contact`, priority: '0.6', changefreq: 'monthly' },
-    { url: `${BASE_URL}/pages/find-a-contractor`, priority: '0.9', changefreq: 'weekly' },
-    { url: `${BASE_URL}/pages/for-contractors`, priority: '0.7', changefreq: 'monthly' },
-    { url: `${BASE_URL}/pages/gallery`, priority: '0.8', changefreq: 'weekly' },
-    { url: `${BASE_URL}/pages/how-it-works`, priority: '0.7', changefreq: 'monthly' },
-    { url: `${BASE_URL}/pages/locations`, priority: '0.9', changefreq: 'weekly' },
-    { url: `${BASE_URL}/pages/services`, priority: '0.9', changefreq: 'monthly' },
+    { url: `${BASE_URL}/pages/find-a-contractor`, priority: '0.6', changefreq: 'weekly' },
+    { url: `${BASE_URL}/pages/for-contractors`, priority: '0.6', changefreq: 'monthly' },
+    { url: `${BASE_URL}/pages/gallery`, priority: '0.6', changefreq: 'weekly' },
+    { url: `${BASE_URL}/pages/how-it-works`, priority: '0.6', changefreq: 'monthly' },
+    { url: `${BASE_URL}/pages/locations`, priority: '0.6', changefreq: 'weekly' },
+    { url: `${BASE_URL}/pages/services`, priority: '0.6', changefreq: 'monthly' },
     // Service pages
     ...serviceSlugs.map((slug) => ({
       url: `${BASE_URL}/services/${slug}`,
@@ -50,7 +50,7 @@ function generatePagesSitemap(): string {
     // Service pages (legacy)
     ...serviceSlugs.map((slug) => ({
       url: `${BASE_URL}/pages/services/${slug}`,
-      priority: '0.8',
+      priority: '0.6',
       changefreq: 'monthly',
     })),
     // DIY guides

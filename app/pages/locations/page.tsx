@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { allCitySlugs, getCityData } from '@/lib/cities';
 
 export const metadata: Metadata = {
   title: 'Locations | Pond Cleanup',
@@ -9,7 +10,52 @@ export const metadata: Metadata = {
   },
 };
 
+// Group cities by region
+function groupCitiesByRegion() {
+  const regions: Record<string, Array<{ slug: string; name: string; state: string }>> = {
+    'West Coast': [],
+    'Southwest & Texas': [],
+    'Midwest': [],
+    'Southeast': [],
+    'Northeast': [],
+    'Other': [],
+  };
+
+  for (const slug of allCitySlugs) {
+    const city = getCityData(slug);
+    if (!city) continue;
+
+    let region = 'Other';
+    if (['CA', 'WA', 'OR'].includes(city.state)) {
+      region = 'West Coast';
+    } else if (['TX', 'AZ', 'NV'].includes(city.state)) {
+      region = 'Southwest & Texas';
+    } else if (['IL', 'CO', 'MN', 'MO', 'IN', 'OH', 'MI', 'WI', 'NE', 'KS'].includes(city.state)) {
+      region = 'Midwest';
+    } else if (['GA', 'FL', 'NC', 'TN', 'KY', 'LA'].includes(city.state)) {
+      region = 'Southeast';
+    } else if (['NY', 'MA', 'PA', 'DC', 'MD', 'VA', 'NJ'].includes(city.state)) {
+      region = 'Northeast';
+    }
+
+    regions[region].push({
+      slug,
+      name: city.name,
+      state: city.state,
+    });
+  }
+
+  // Sort cities within each region alphabetically
+  for (const region in regions) {
+    regions[region].sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  return regions;
+}
+
 export default function LocationsPage() {
+  const regions = groupCitiesByRegion();
+
   return (
     <main>
       <section className="directory-hero">
@@ -31,67 +77,23 @@ export default function LocationsPage() {
         <div className="container">
           <h2>Areas We Serve</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'var(--spacing-md)' }}>
-            <div>
-              <h3>West Coast</h3>
-              <ul className="services-list">
-                <li><Link href="/locations/city/los-angeles-ca">Los Angeles, CA</Link></li>
-                <li><Link href="/locations/city/san-diego-ca">San Diego, CA</Link></li>
-                <li><Link href="/locations/city/san-francisco-ca">San Francisco, CA</Link></li>
-                <li><Link href="/locations/city/seattle-wa">Seattle, WA</Link></li>
-                <li><Link href="/locations/city/portland-or">Portland, OR</Link></li>
-                <li><Link href="/locations/city/phoenix-az">Phoenix, AZ</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3>Southwest & Texas</h3>
-              <ul className="services-list">
-                <li><Link href="/locations/city/austin-tx">Austin, TX</Link></li>
-                <li><Link href="/locations/city/dallas-tx">Dallas, TX</Link></li>
-                <li><Link href="/locations/city/houston-tx">Houston, TX</Link></li>
-                <li><Link href="/locations/city/san-antonio-tx">San Antonio, TX</Link></li>
-                <li><Link href="/locations/city/las-vegas-nv">Las Vegas, NV</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3>Midwest</h3>
-              <ul className="services-list">
-                <li><Link href="/locations/city/chicago-il">Chicago, IL</Link></li>
-                <li><Link href="/locations/city/denver-co">Denver, CO</Link></li>
-                <li><Link href="/locations/city/minneapolis-mn">Minneapolis, MN</Link></li>
-                <li><Link href="/locations/city/kansas-city-mo">Kansas City, MO</Link></li>
-                <li><Link href="/locations/city/indianapolis-in">Indianapolis, IN</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3>Southeast</h3>
-              <ul className="services-list">
-                <li><Link href="/locations/city/atlanta-ga">Atlanta, GA</Link></li>
-                <li><Link href="/locations/city/miami-fl">Miami, FL</Link></li>
-                <li><Link href="/locations/city/orlando-fl">Orlando, FL</Link></li>
-                <li><Link href="/locations/city/charlotte-nc">Charlotte, NC</Link></li>
-                <li><Link href="/locations/city/nashville-tn">Nashville, TN</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3>Northeast</h3>
-              <ul className="services-list">
-                <li><Link href="/locations/city/new-york-ny">New York, NY</Link></li>
-                <li><Link href="/locations/city/boston-ma">Boston, MA</Link></li>
-                <li><Link href="/locations/city/philadelphia-pa">Philadelphia, PA</Link></li>
-                <li><Link href="/locations/city/washington-dc">Washington, DC</Link></li>
-                <li><Link href="/locations/city/baltimore-md">Baltimore, MD</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3>More Cities</h3>
-              <ul className="services-list">
-                <li><Link href="/locations/city/columbus-oh">Columbus, OH</Link></li>
-                <li><Link href="/locations/city/detroit-mi">Detroit, MI</Link></li>
-                <li><Link href="/locations/city/milwaukee-wi">Milwaukee, WI</Link></li>
-                <li><Link href="/locations/city/oklahoma-city-ok">Oklahoma City, OK</Link></li>
-                <li><Link href="/locations/city/memphis-tn">Memphis, TN</Link></li>
-              </ul>
-            </div>
+            {Object.entries(regions).map(([regionName, cities]) => {
+              if (cities.length === 0) return null;
+              return (
+                <div key={regionName}>
+                  <h3>{regionName}</h3>
+                  <ul className="services-list">
+                    {cities.map((city) => (
+                      <li key={city.slug}>
+                        <Link href={`/pages/cities/${city.slug}`}>
+                          {city.name}, {city.state}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

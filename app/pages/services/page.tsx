@@ -44,6 +44,17 @@ export default function ServicesPage() {
               <Link href="/services/pond-opening-closing" className="service-link">Learn more →</Link>
             </article>
           </div>
+          <div style={{ marginTop: 'var(--spacing-lg)', textAlign: 'center' }}>
+            <p style={{ marginBottom: 'var(--spacing-sm)' }}>
+              Also available via legacy routes:
+            </p>
+            <div style={{ display: 'flex', gap: 'var(--spacing-md)', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/pages/services/pond-cleaning" style={{ fontSize: 'var(--font-size-small)' }}>Legacy: Pond Cleaning</Link>
+              <Link href="/pages/services/pond-maintenance" style={{ fontSize: 'var(--font-size-small)' }}>Legacy: Maintenance</Link>
+              <Link href="/pages/services/pond-opening-closing" style={{ fontSize: 'var(--font-size-small)' }}>Legacy: Opening & Closing</Link>
+              <Link href="/pages/services/pond-restoration" style={{ fontSize: 'var(--font-size-small)' }}>Legacy: Restoration</Link>
+            </div>
+          </div>
         </div>
       </section>
 
