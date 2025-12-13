@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-static';
 export const revalidate = 86400; // Revalidate once per day
 
 const BASE_URL = 'https://pondcleanup.com';
@@ -28,8 +29,10 @@ export async function GET() {
 </sitemapindex>`;
 
   return new NextResponse(sitemapIndex, {
+    status: 200,
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate',
     },
   });
 }

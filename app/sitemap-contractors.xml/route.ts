@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { contractors } from '@/lib/contractors';
 
+export const dynamic = 'force-static';
 export const revalidate = 86400; // Revalidate once per day
 
 const BASE_URL = 'https://pondcleanup.com';
@@ -26,8 +27,10 @@ ${contractorUrls.join('\n')}
 </urlset>`;
 
   return new NextResponse(sitemap, {
+    status: 200,
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate',
     },
   });
 }
